@@ -3,7 +3,7 @@ import path from 'path'
 import getAppDataPath from 'appdata-path'
 
 const cominnekDir = path.join(getAppDataPath(), '.cominnek')
- console.log(cominnekDir)
+
 export default {
   PORT: 4399,
   TOKEN_FILE: path.join(cominnekDir, 'plugins', 'jira', 'token.json'),
