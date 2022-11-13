@@ -10,7 +10,30 @@
       "scripts":[
         {
             "name": "login",
-            "help": "Login to Jira"
+            "help": "Login to Jira",
+            "flags": [
+              {
+                "short": "e",
+                "long": "email",
+                "help": "Email address",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "short": "t",
+                "long": "token",
+                "help": "API token",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "short": "u",
+                "long": "url",
+                "help": "Jira URL",
+                "type": "string",
+                "default": ""
+              }
+            ]
         },
         {
             "name": "logout",
@@ -19,7 +42,7 @@
       ]
     },
     {
-      "name": "list",
+      "name": "issues",
       "help": "List Jira issues"
     }
   ]

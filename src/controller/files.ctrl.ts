@@ -12,4 +12,8 @@ export class FileController {
     delete(path: string): void {
         fs.unlinkSync(path);
     }
+
+    exist(path: string) {
+        return fs.existsSync(path);
+    }
 }

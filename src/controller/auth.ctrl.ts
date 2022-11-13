@@ -1,9 +1,13 @@
 import clc from "cli-color";
 import mainConfig from "../config/main.config";
-import { eventEmitter } from "../events/main.event";
-import { startServer } from "../server/auth.server";
 import { FileController } from './files.ctrl';
 import { CryptoController } from './crypto.ctrl';
+
+export interface IAuth {
+    username: string;
+    token: string;
+    url: string;
+}
 
 export class AuthController {
     private fileCtrl: FileController;
@@ -14,18 +18,14 @@ export class AuthController {
         this.cryptoCtrl = new CryptoController();
     }
 
-    login(): void {
-        console.log(`Please ${clc.blue("authenticate")} with Jira at:`);
-        console.log(mainConfig.JIRA_AUTH_URL);
-
-        eventEmitter.on("auth", (code) => {
-            this.saveToken(code);
-            console.log("");
-            console.log(clc.bgGreenBright(" Success! ") + " Logged in to Jira.");
-            process.exit(0);
+    login(email: string, token: string, url: string): void {
+        this.saveToken({
+            username: email,
+            token,
+            url
         });
 
-        startServer();
+        console.log(clc.bgGreenBright(" Success! ") + " Logged in successfully.");
     }
 
     logout(): void {
@@ -34,10 +34,21 @@ export class AuthController {
         process.exit(0);
     }
 
-    private saveToken(token: string): void {
-        const encryptedToken = this.cryptoCtrl.encrypt(token);
+    private saveToken(auth: IAuth): void {
+        const encryptedToken = this.cryptoCtrl.encrypt(JSON.stringify(auth));
         const parsedToken = JSON.stringify(encryptedToken);
 
         this.fileCtrl.write(mainConfig.TOKEN_FILE, parsedToken);
+    }
+
+    public getToken(): IAuth | undefined {
+        const file = mainConfig.TOKEN_FILE;
+        if (!this.fileCtrl.exist(file)) return;
+
+        const token = this.fileCtrl.read(file);
+        const parsedToken = JSON.parse(token);
+        const decryptedToken = this.cryptoCtrl.decrypt(parsedToken);
+
+        return JSON.parse(decryptedToken);
     }
 }
