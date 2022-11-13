@@ -1,0 +1,68 @@
+{
+  "name": "jira",
+  "exec": "script.sh",
+  "help": "This plugin allows you to create and manage Jira issues.",
+  "version": "0.0.1",
+  "process": "bash",
+  "flags": [
+    {
+      "short": "s",
+      "long": "save",
+      "help": "Save the issue to Jira",
+      "type": "bool",
+      "default": false
+    },
+    {
+      "short": "d",
+      "long": "description",
+      "help": "Description of the issue",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "short": "t",
+      "long": "title",
+      "help": "Title of the issue",
+      "type": "string",
+      "default": ""
+    }
+  ],
+  "scripts": [
+    {
+      "name": "auth",
+      "help": "Authenticate with Jira",
+      "exec": "auth.sh",
+      "scripts": [
+        {
+          "name": "login",
+          "help": "Login to Jira",
+          "flags": [
+            {
+              "short": "u",
+              "long": "username",
+              "help": "Username for Jira",
+              "type": "string",
+              "default": ""
+            },
+            {
+              "short": "p",
+              "long": "password",
+              "help": "Password for Jira",
+              "type": "string",
+              "default": ""
+            }
+          ]
+        },
+        {
+          "name": "logout",
+          "help": "Logout of Jira"
+        }
+      ]
+    },
+    {
+      "name": "close",
+      "help": "Close a Jira issue",
+      "exec": "close.js"
+    }
+  ]
+}

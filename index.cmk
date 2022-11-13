@@ -1,0 +1,26 @@
+{
+  "name": "jira",
+  "exec": "jira",
+  "help": "This plugin allows you to create and manage Jira issues.",
+  "version": "0.0.1",
+  "scripts": [
+    {
+      "name": "auth",
+      "help": "Authenticate with Jira",
+      "scripts":[
+        {
+            "name": "login",
+            "help": "Login to Jira"
+        },
+        {
+            "name": "logout",
+            "help": "Logout from Jira"
+        }
+      ]
+    },
+    {
+      "name": "list",
+      "help": "List Jira issues"
+    }
+  ]
+}
